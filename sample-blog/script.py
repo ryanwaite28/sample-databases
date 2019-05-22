@@ -348,7 +348,7 @@ def create_comment_likes():
 def create_post_tags():
   conn = sqlite3.connect(db_file)
 
-  for post_tag_id in range(1, 4001):
+  for post_tag_id in range(1, 25001):
     try:
       post_id = random.choice(post_ids)
       tag_id = random.choice(tag_ids)

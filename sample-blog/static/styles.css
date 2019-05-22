@@ -1,0 +1,62 @@
+/* Common */
+
+body {
+  background: #f2f2f2;
+  overflow-x: hidden;
+}
+
+nav {
+  background: lightgrey;
+}
+
+.nav-message {
+  margin: 0;
+  padding: 0 10px;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+}
+
+.top-nav-ul {
+  margin: 0;
+  padding: 0;
+}
+
+.top-nav-ul > li {
+  margin: 0;
+  padding: 0 10px;
+  list-style: none;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+}
+
+.container {
+  margin-top: 50px;
+  background: #fff;
+  padding: 25px;
+}
+
+.text-grey {
+  color: grey;
+}
+
+.tags-ul {
+  margin: 0;
+  padding: 0;
+}
+
+.tags-ul > li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  padding: 0
+
+}
+
+/* Welcome */
+
+.welcome-header {
+  /* padding-top: 25px; */
+}
