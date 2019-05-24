@@ -1,62 +1,108 @@
 /* Common */
 
 body {
-  background: #f2f2f2;
-  overflow-x: hidden;
+    background: #f2f2f2;
+    overflow-x: hidden;
 }
 
 nav {
-  background: lightgrey;
+    background: lightgrey;
 }
 
 .nav-message {
-  margin: 0;
-  padding: 0 10px;
-  height: 50px;
-  line-height: 50px;
-  vertical-align: middle;
+    margin: 0;
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.nav-message > a {
+  
 }
 
 .top-nav-ul {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
-.top-nav-ul > li {
-  margin: 0;
-  padding: 0 10px;
-  list-style: none;
-  display: inline-block;
-  height: 50px;
-  line-height: 50px;
-  vertical-align: middle;
+.top-nav-ul>li {
+    margin: 0;
+    padding: 0 10px;
+    list-style: none;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.middlr {
+  display: block;
+  margin: auto;
+}
+
+.space-1 {
+  padding: 20px;
 }
 
 .container {
-  margin-top: 50px;
-  background: #fff;
-  padding: 25px;
+    margin-top: 50px;
 }
 
 .text-grey {
-  color: grey;
+    color: grey;
 }
 
 .tags-ul {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
-.tags-ul > li {
-  list-style: none;
-  display: inline-block;
-  margin: 0 5px 5px 0;
-  padding: 0
-
+.tags-ul>li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    padding: 0
 }
+
+.box-s1 {
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px grey;
+    background: #fff;
+    padding: 25px;
+}
+
+div.user-info-box-1 {
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+div.user-info-box-1>img.user-icon-1 {
+    height: 48px;
+    width: 48px;
+    border-radius: 48px;
+    float: left;
+}
+
+div.user-info-box-1>span.user-details-1 {
+    float: left;
+    margin-left: 15px;
+}
+
+.float-left {
+    float: left;
+}
+
 
 /* Welcome */
 
 .welcome-header {
-  /* padding-top: 25px; */
+    /* padding-top: 25px; */
+}
+
+/* User Page */
+img.user-bio-icon-1 {
+  width: 150px;
+  max-width: 100%;
+  margin-bottom: 10px;
 }

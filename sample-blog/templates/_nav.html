@@ -1,0 +1,20 @@
+<nav>
+      <div class="row welcome-header">
+          <section class="col-md-4">
+            <h3 class="text-center nav-message">
+                <a title="Blog Site" href="/">Blog Site</a>
+            </h3>
+          </section>
+          <section class="col-md-8">
+            <ul class="top-nav-ul text-right">
+              {% if logged_in %}
+              <li><a title="Home" href="/users/{{ you_id }}">Home</a></li>
+              <li><a title="Sign Out" href="/signout">Sign Out</a></li>
+              {% else %}
+              <li><a title="Log In" href="/login">Log In</a></li>
+              <li><a title="Sign Up" href="/signup">Sign Up</a></li>
+              {% endif %}
+            </ul>
+          </section>
+        </div>
+    </nav>

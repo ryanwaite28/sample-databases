@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Blog - (( ::post.title ))</title>
+
+    {% include '_deps.html' %}
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/post-page.js"></script>
+  </head>
+  <body ng-app="sampleApp" ng-controller="postpageCtrl">
+    {% include '_nav.html' %}
+
+    <div class="container">
+      <div class="row box-s1">
+        <div class="col-md-12">
+          <div class="user-info-box-1">
+            <img class="user-icon-1" src="(( ::post.owner.icon_link || '/static/anon.png' ))" />
+            <span class="user-details-1">
+            <strong>
+              <a 
+                title="(( ::post.owner.displayname ))"
+                href="/users/(( ::post.owner_id ))">
+                (( ::post.owner.displayname ))
+              </a>
+            </strong><br/>
+            <small>(( ::post.owner.username ))</small>
+          </span>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <h3>
+            <a 
+              title="(( ::post.title ))"
+              href="/posts/(( ::post.id ))">
+              (( ::post.title ))
+            </a>
+          </h3>
+          <p>(( post.body ))</p>
+          <section ng-if="!!post.tags.length">
+            Tags: (( ::post.tags.length ))
+            <ul class="tags-ul">
+              <li ng-repeat="tag in post.tags">
+                <span class="badge badge-pill badge-dark">(( ::tag ))</span>
+              </li>
+            </ul>
+            <br/>
+          </section>
+          <p class="text-grey">
+            <em>
+              <small>
+                (( ::post.date_created ))
+              </small>
+            </em>
+          </p>
+          <p class="text-grey">
+            Likes: (( ::post.likes ))<br/>
+            Comments: (( ::post.comments_count ))
+          </p>
+        </div>
+        <br/>
+      </div>
+
+      <div class="row space-1">
+        <div class="col-md-12">
+            <h4 class="text-center">Comments</h4>
+        </div>
+      </div>
+
+      <div class="row box-s1" ng-repeat="comment in comments">
+        <div class="col-md-12">
+          <div class="user-info-box-1">
+            <img class="user-icon-1" src="(( ::comment.owner.icon_link || '/static/anon.png' ))" />
+            <span class="user-details-1">
+            <strong>
+              <a 
+                title="(( ::comment.owner.displayname ))"
+                href="/users/(( ::comment.owner_id ))">
+                (( ::comment.owner.displayname ))
+              </a>
+            </strong><br/>
+            <small>(( ::comment.owner.username ))</small>
+          </span>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <p>(( comment.body ))</p>
+          <section ng-if="!!comment.tags.length">
+            Tags: (( ::comment.tags.length ))
+            <ul class="tags-ul">
+              <li ng-repeat="tag in comment.tags">
+                <span class="badge badge-pill badge-dark">(( ::tag ))</span>
+              </li>
+            </ul>
+            <br/>
+          </section>
+          <p class="text-grey">
+            <em>
+              <small>
+                (( ::comment.date_created ))
+              </small>
+            </em>
+          </p>
+          <p class="text-grey">
+            Likes: (( ::comment.likes ))
+          </p>
+        </div>
+      </div>
+
+      
+    <div class="row">
+        <div class="col-md-12">
+          <p class="text-center" ng-if="!init && !no_more_records">
+            <button ng-disabled="is_loading" type="button" class="btn btn-primary"
+              ng-click="load_post_comments()">Load More Comments</button>
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+</html>

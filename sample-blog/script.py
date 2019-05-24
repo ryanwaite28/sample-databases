@@ -83,7 +83,18 @@ notifications_latest_id = 1
 def create_users():
   conn = sqlite3.connect(db_file)
 
-  for user_id in range(1, 1001):
+  admin_command = '''
+  INSERT INTO users (id, displayname, username, email, pswrd, bio, uuid, date_created)
+  VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+  ''' % (1, 'administrator', 'admin', 'admin@test.com', 'password123', 'administrator biography.', 'abcd-1234', '2019-01-01 12:00:00.000000')
+
+  conn.execute(admin_command)
+  conn.commit()
+  user_ids.append(1)
+
+  init_data_sql_file.write(admin_command)
+
+  for user_id in range(2, 1001):
     try:
       user_ids.append(user_id)
 
