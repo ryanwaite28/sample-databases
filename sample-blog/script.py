@@ -3,6 +3,7 @@ import lorem
 import random, string, sys, os, datetime
 
 from namegenerator import generate_word
+from chamber import action_types, target_types
 
 sql_file = 'schema2.sql'
 db_file = 'blog.db'
@@ -57,24 +58,6 @@ user_ids = []
 tag_ids = []
 post_ids = []
 comment_ids = []
-
-action_types = {
-  'follow': 'follow',
-  'new_post': 'new_post',
-  'post_like': 'post_like',
-  'new_comment': 'new_comment',
-  'comment_like': 'comment_like',
-  'new_message': 'new_message',
-}
-
-target_types = {
-  'follow': 'follow',
-  'post': 'post',
-  'post_like': 'post_like',
-  'comment': 'comment',
-  'comment_like': 'comment_like',
-  'message': 'message',
-}
 
 notifications_latest_id = 1
 

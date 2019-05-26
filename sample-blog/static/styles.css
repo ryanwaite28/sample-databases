@@ -83,15 +83,44 @@ div.user-info-box-1>img.user-icon-1 {
     border-radius: 48px;
     float: left;
 }
-
 div.user-info-box-1>span.user-details-1 {
-    float: left;
-    margin-left: 15px;
+  float: left;
+  margin-left: 15px;
 }
 
-.float-left {
-    float: left;
+
+div.message-box-1, div.message-box-2 {
+  overflow: hidden;
+  margin-bottom: 10px;
 }
+
+div.message-box-1>img.user-icon {
+  height: 48px;
+  width: 48px;
+  border-radius: 48px;
+  float: left;
+}
+div.message-box-1>span.message-details {
+  float: left;
+  margin-left: 15px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+div.message-box-2>img.user-icon {
+  height: 48px;
+  width: 48px;
+  border-radius: 48px;
+  float: right;
+}
+div.message-box-2>span.message-details {
+  float: right;
+  margin-left: 15px;
+  padding: 10px;
+  border: 1px solid black;
+  background: #e3f2fd;
+}
+
 
 
 /* Welcome */
@@ -105,4 +134,10 @@ img.user-bio-icon-1 {
   width: 150px;
   max-width: 100%;
   margin-bottom: 10px;
+}
+
+/* Messages Page */
+
+.top-space-1 {
+  padding-top: 10px;
 }

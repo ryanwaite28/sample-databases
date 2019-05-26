@@ -74,15 +74,16 @@
           <div class="user-info-box-1">
             <img class="user-icon-1" src="(( ::comment.owner.icon_link || '/static/anon.png' ))" />
             <span class="user-details-1">
-            <strong>
-              <a 
-                title="(( ::comment.owner.displayname ))"
-                href="/users/(( ::comment.owner_id ))">
-                (( ::comment.owner.displayname ))
-              </a>
-            </strong><br/>
-            <small>(( ::comment.owner.username ))</small>
-          </span>
+              <strong>
+                <a 
+                  title="(( ::comment.owner.displayname ))"
+                  href="/users/(( ::comment.owner_id ))">
+                  (( ::comment.owner.displayname ))
+                </a>
+              </strong>
+              <br/>
+              <small>(( ::comment.owner.username ))</small>
+            </span>
           </div>
         </div>
 
@@ -113,12 +114,12 @@
       
     <div class="row">
         <div class="col-md-12">
-          <p class="text-center" ng-if="!init && !no_more_records">
+            <p class="text-center" ng-if="!no_more_records">
             <button ng-disabled="is_loading" type="button" class="btn btn-primary"
-              ng-click="load_post_comments()">Load More Comments</button>
-          </p>
+                ng-click="load_post_comments()">Load More Comments</button>
+            </p>
         </div>
-      </div>
+    </div>
       
     </div>
   </body>

@@ -1,0 +1,49 @@
+<div class="row box-s1">
+    <div class="col-md-12">
+        <div class="user-info-box-1">
+        <img class="user-icon-1" src="(( $ctrl.post.owner.icon_link || '/static/anon.png' ))" />
+        <span class="user-details-1">
+        <strong>
+            <a 
+            title="(( $ctrl.post.owner.displayname ))"
+            href="/users/(( $ctrl.post.owner_id ))">
+            (( $ctrl.post.owner.displayname ))
+            </a>
+        </strong><br/>
+        <small>(( $ctrl.post.owner.username ))</small>
+        </span>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <h3>
+        <a 
+            title="(( $ctrl.post.title ))"
+            href="/posts/(( $ctrl.post.id ))">
+            (( $ctrl.post.title ))
+        </a>
+        </h3>
+        <p>(( $ctrl.post.body ))</p>
+        <section ng-if="!!post.tags.length">
+        Tags: (( $ctrl.post.tags.length ))
+        <ul class="tags-ul">
+            <li ng-repeat="tag in post.tags">
+            <span class="badge badge-pill badge-dark">(( tag ))</span>
+            </li>
+        </ul>
+        <br/>
+        </section>
+        <p class="text-grey">
+        <em>
+            <small>
+            (( $ctrl.post.date_created ))
+            </small>
+        </em>
+        </p>
+        <p class="text-grey">
+        Likes: (( $ctrl.post.likes ))<br/>
+        Comments: (( $ctrl.post.comments_count ))
+        </p>
+    </div>
+    <br/>
+</div>

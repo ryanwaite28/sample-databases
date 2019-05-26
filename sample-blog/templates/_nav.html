@@ -9,6 +9,8 @@
             <ul class="top-nav-ul text-right">
               {% if logged_in %}
               <li><a title="Home" href="/users/{{ you_id }}">Home</a></li>
+              <li><a title="Home" href="/notifications">Notifications</a></li>
+              <li><a title="Home" href="/messages">Messages</a></li>
               <li><a title="Sign Out" href="/signout">Sign Out</a></li>
               {% else %}
               <li><a title="Log In" href="/login">Log In</a></li>

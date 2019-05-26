@@ -1,0 +1,28 @@
+# Get Messages: 1
+
+SELECT messages.id AS MsgID, messages.sender_id AS MsgSenderID, messages.recipient_id AS MsgRecipientID,
+	messages.content AS MsgContent, messages.date_sent AS MsgDateSent, messages.date_read AS MsgDateRead,
+	messages.uuid AS MsgUuid, messages.date_created AS MsgDateCreated,
+	users.displayname AS SenderDisplayname, users.username AS SenderUsername, 
+    users.icon_link AS SenderIconLink, users.date_created AS SenderDateCreated
+FROM messages
+JOIN users ON messages.sender_id = users.id 
+WHERE messages.recipient_id = 1 AND messages.sender_id = 793
+ORDER BY messages.id DESC
+LIMIT 5;
+
+---
+
+# Get Message Senders 
+
+SELECT messages.id AS MsgID, messages.sender_id AS MsgSenderID,
+	users.displayname AS SenderDisplayname, users.username AS SenderUsername, 
+    users.icon_link AS SenderIconLink, users.date_created AS SenderDateCreated
+FROM messages
+JOIN users ON messages.sender_id = users.id 
+WHERE messages.recipient_id = 1
+GROUP BY messages.sender_id
+ORDER BY messages.id DESC
+LIMIT 5;
+
+---

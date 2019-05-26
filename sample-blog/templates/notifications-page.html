@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Blog - Notifications</title>
+
+    {% include '_deps.html' %}
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/notifications-page.js"></script>
+  </head>
+  <body ng-app="sampleApp" ng-controller="notespageCtrl as ctrl">
+    {% include '_nav.html' %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4" ng-if="you && !!you.id">
+            <div class="box-s1">
+                <img class="user-bio-icon-1 middlr" src="(( ::you.icon_link || '/static/anon.png' ))" />
+                <h3 class="text-center">(( you.displayname ))</h3>
+                <p class="text-center">(( you.username ))</p>
+                <p class="text-center"><small>(Your Page)</small></p>
+            </div>
+        </div>
+
+        <div class="col-md-8" ng-if="you && !!you.id">
+            <div class="row">
+                <div class="col-md-12 box-s1">
+                    <div class="">
+                        <h2>Latest Notifications</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row box-s1" ng-repeat="note in notifications">
+                <div class="col-md-12">
+          <div class="user-info-box-1">
+            <img class="user-icon-1" src="(( ::note.from.icon_link || '/static/anon.png' ))" />
+            <span class="user-details-1">
+            <strong>
+              <a 
+                title="(( ::note.from.displayname ))"
+                href="/users/(( ::note.from.id ))">
+                (( ::note.from.displayname ))
+              </a>
+            </strong><br/>
+            <small>(( ::note.from.username ))</small>
+          </span>
+          </div>
+        </div>
+                <div class="col-md-12">
+                    <p>(( ::note.notification_message ))</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                <p class="text-center" ng-if="!init && !no_more_records">
+                    <button ng-disabled="is_loading" type="button" class="btn btn-primary"
+                    ng-click="load_notifications()">Load More Notifications</button>
+                </p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
