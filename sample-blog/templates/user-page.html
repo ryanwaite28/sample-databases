@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sample Blog - (( user.displayname | user.username ))</title>
+    <title>Sample Blog - User Page</title>
 
     {% include '_deps.html' %}
 
@@ -44,7 +44,11 @@
                     Tags: (( ::post.tags.length ))
                     <ul class="tags-ul">
                     <li ng-repeat="tag in post.tags">
-                        <span class="badge badge-pill badge-dark">(( ::tag ))</span>
+                            <a href="/tags/(( ::tag.id ))">
+                                <span title="See posts tagged with '(( ::tag.name ))'" class="badge badge-pill badge-dark">
+                                    (( ::tag.name ))
+                                </span>
+                            </a>
                     </li>
                     </ul>
                     <br/>

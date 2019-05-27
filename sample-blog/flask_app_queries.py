@@ -42,7 +42,7 @@ def get_latest_posts(post_id = None):
     tags_list = []
 
     command = '''
-    SELECT tags.name AS TagName
+    SELECT tags.id, tags.name
     FROM post_tags
     JOIN tags ON post_tags.tag_id = tags.id
     WHERE post_tags.post_id = %s
@@ -53,7 +53,10 @@ def get_latest_posts(post_id = None):
     tags_rows = cur2.fetchall()
 
     for r in tags_rows:
-      tags_list.append(r[0])
+      tags_list.append({
+        "id": r[0],
+        "name": r[1],
+      })
 
     data_list.append({
       "id": post_row[0],
@@ -112,7 +115,7 @@ def get_user_latest_posts(user_id, post_id):
     tags_list = []
 
     command = '''
-    SELECT tags.name AS TagName
+    SELECT tags.id, tags.name
     FROM post_tags
     JOIN tags ON post_tags.tag_id = tags.id
     WHERE post_tags.post_id = %s
@@ -123,7 +126,10 @@ def get_user_latest_posts(user_id, post_id):
     tags_rows = cur2.fetchall()
 
     for r in tags_rows:
-      tags_list.append(r[0])
+      tags_list.append({
+        "id": r[0],
+        "name": r[1],
+      })
 
     data_list.append({
       "id": post_row[0],
@@ -167,7 +173,7 @@ def get_post_by_id(post_id):
   tags_list = []
 
   command = '''
-  SELECT tags.name AS TagName
+  SELECT tags.id, tags.name
   FROM post_tags
   JOIN tags ON post_tags.tag_id = tags.id
   WHERE post_tags.post_id = %s
@@ -178,7 +184,10 @@ def get_post_by_id(post_id):
   tags_rows = cur2.fetchall()
 
   for r in tags_rows:
-    tags_list.append(r[0])
+    tags_list.append({
+        "id": r[0],
+        "name": r[1],
+      })
 
   post = {
     "id": post_row[0],
@@ -324,7 +333,7 @@ def get_latest_comments(post_id, comment_id):
     tags_list = []
 
     command = '''
-    SELECT tags.name AS TagName
+    SELECT tags.id, tags.name
     FROM comment_tags
     JOIN tags ON comment_tags.tag_id = tags.id
     WHERE comment_tags.comment_id = %s
@@ -335,7 +344,10 @@ def get_latest_comments(post_id, comment_id):
     tags_rows = cur2.fetchall()
 
     for r in tags_rows:
-      tags_list.append(r[0])
+      tags_list.append({
+        "id": r[0],
+        "name": r[1],
+      })
 
     data_list.append({
       "id": comment_row[0],
@@ -521,6 +533,155 @@ def get_messages_by_sender(user_id, sender_id, message_id):
         "username": row[9],
         "icon_link": row[10],
         "date_created": row[11],
+      }
+    })
+
+  conn.close()
+  return data_list
+
+
+def get_latest_tags(tag_id):
+  if not tag_id:
+    query = '''
+    SELECT tags.id, tags.name,
+      (SELECT COUNT(post_tags.id) FROM post_tags WHERE post_tags.tag_id = tags.id) AS PostsByTagCount
+    FROM tags
+    ORDER BY tags.id DESC
+    LIMIT 20
+    '''
+  else:
+    query = '''
+    SELECT tags.id, tags.name,
+      (SELECT COUNT(post_tags.id) FROM post_tags WHERE post_tags.tag_id = tags.id) AS PostsByTagCount
+    FROM tags
+    WHERE id < %s
+    ORDER BY tags.id DESC
+    LIMIT 20
+    ''' % (tag_id,)
+
+  conn = sqlite3.connect(db_file)
+  cur1 = conn.execute(query)
+  tags_rows = cur1.fetchall()
+
+  data_list = []
+
+  for row in tags_rows:
+    data_list.append({
+      "id": row[0],
+      "name": row[1],
+      "posts_by_tag_count": row[2]
+    })
+
+  conn.close()
+  return data_list
+
+def get_tag_by_id(tag_id):
+  if not tag_id:
+    return None
+  
+  query = '''
+  SELECT tags.id, tags.name,
+    (SELECT COUNT(post_tags.id) FROM post_tags WHERE post_tags.tag_id = tags.id) AS PostsByTagCount
+  FROM tags
+  WHERE id = %s 
+  '''  % (tag_id,)
+
+  conn = sqlite3.connect(db_file)
+  cur1 = conn.execute(query)
+  tag_row = cur1.fetchone()
+
+  if not tag_row:
+    conn.close()
+    return None
+
+  tag = {
+    "id": tag_row[0],
+    "name": tag_row[1],
+    "posts_by_tag_count": tag_row[2]
+  }
+
+  conn.close()
+  return tag
+
+def get_tag_latest_posts(tag_id, post_tag_id):
+  if not post_tag_id:
+    query = '''
+    SELECT post_tags.id AS PostTagID, post_tags.tag_id AS TagID, tags.name AS TagName, posts.id AS PostID, posts.owner_id AS PostOwnerID, posts.title AS PostTitle, posts.body AS PostBody, posts.date_created AS PostDateCreated, posts.uuid AS PostUuid, 
+      users.displayname AS OwnerDisplayname, users.username AS OwnerUsername, 
+      users.icon_link AS OwnerIconLink, users.date_created AS OwnerDateCreated,
+      (SELECT COUNT(post_likes.id) FROM post_likes WHERE post_likes.post_id = posts.id) AS PostLikesCount,
+      (SELECT COUNT(comments.id) FROM comments WHERE comments.post_id = posts.id) AS CommentsCount
+    FROM post_tags
+    JOIN tags ON post_tags.tag_id = tags.id
+    JOIN users ON posts.owner_id = users.id
+    JOIN posts ON post_tags.post_id = posts.id
+    WHERE post_tags.tag_id = %s
+    ORDER BY post_tags.id DESC
+    LIMIT 5
+    ''' % (tag_id,)
+  else:
+    query = '''
+    SELECT post_tags.id AS PostTagID, post_tags.tag_id AS TagID, tags.name AS TagName, posts.id AS PostID, posts.owner_id AS PostOwnerID, posts.title AS PostTitle, posts.body AS PostBody, posts.date_created AS PostDateCreated, posts.uuid AS PostUuid, 
+      users.displayname AS OwnerDisplayname, users.username AS OwnerUsername, 
+      users.icon_link AS OwnerIconLink, users.date_created AS OwnerDateCreated,
+      (SELECT COUNT(post_likes.id) FROM post_likes WHERE post_likes.post_id = posts.id) AS PostLikesCount,
+      (SELECT COUNT(comments.id) FROM comments WHERE comments.post_id = posts.id) AS CommentsCount
+    FROM post_tags
+    JOIN tags ON post_tags.tag_id = tags.id
+    JOIN users ON posts.owner_id = users.id
+    JOIN posts ON post_tags.post_id = posts.id
+    WHERE post_tags.tag_id = %s AND post_tags.id < %s
+    ORDER BY post_tags.id DESC
+    LIMIT 5
+    ''' % (tag_id, post_tag_id)
+
+  conn = sqlite3.connect(db_file)
+  cur1 = conn.execute(query)
+  posts_rows = cur1.fetchall()
+
+  data_list = []
+
+  for post_row in posts_rows:
+    tags_list = []
+
+    command = '''
+    SELECT tags.id, tags.name
+    FROM post_tags
+    JOIN tags ON post_tags.tag_id = tags.id
+    WHERE post_tags.post_id = %s
+    LIMIT 10
+    ''' % (post_row[3],)
+
+    cur2 = conn.execute(command)
+    tags_rows = cur2.fetchall()
+
+    for r in tags_rows:
+      tags_list.append({
+        "id": r[0],
+        "name": r[1],
+      })
+
+    data_list.append({
+      "id": post_row[0],
+      "tag_id": post_row[1],
+      "tag_name": post_row[2],
+      "post_id": post_row[3],
+      "post": {
+        "id": post_row[3],
+        "owner_id": post_row[4],
+        "title": post_row[5],
+        "body": post_row[6],
+        "date_created": post_row[7],
+        "uuid": post_row[8],
+        "owner": {
+          "displayname": post_row[9],
+          "username": post_row[10],
+          "icon_link": post_row[11],
+          "date_created": post_row[12],
+        },
+        "likes": post_row[13],
+        "comments_count": post_row[14],
+        "tags": tags_list,
       }
     })
 

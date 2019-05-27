@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Blog - Posts By Tag</title>
+
+    {% include '_deps.html' %}
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/posts-by-tag.js"></script>
+  </head>
+  <body ng-app="sampleApp" ng-controller="postsbytagCtrl as ctrl">
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 box-s1" ng-switch="!!tag_exists">
+                <div ng-switch-when="true">
+                    <h2>(( tag_exists.name ))</h2>
+                    <h5 class="text-grey">Posts: (( tag_exists.posts_by_tag_count ))</h5>
+                </div>
+                <div ng-switch-when="false">
+                    <h2>Tag Does Not Exist</h2>
+                </div>
+            </div>
+        </div>
+
+      <div class="row box-s1" ng-repeat="post_tag in posts_by_tag">
+        <div class="col-md-12">
+          <div class="user-info-box-1">
+            <img class="user-icon-1" src="(( ::post_tag.post.owner.icon_link || '/static/anon.png' ))" />
+            <span class="user-details-1">
+            <strong>
+              <a 
+                title="(( ::post_tag.post.owner.displayname ))"
+                href="/users/(( ::post_tag.post.owner_id ))">
+                (( ::post_tag.post.owner.displayname ))
+              </a>
+            </strong><br/>
+            <small>(( ::post_tag.post.owner.username ))</small>
+          </span>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <h3>
+            <a 
+              title="(( ::post_tag.post.title ))"
+              href="/posts/(( ::post_tag.post.id ))">
+              (( ::post_tag.post.title ))
+            </a>
+          </h3>
+          <p>(( post.body ))</p>
+          <section ng-if="!!post_tag.post.tags.length">
+            Tags: (( ::post_tag.post.tags.length ))
+            <ul class="tags-ul">
+                <li ng-repeat="tag in post_tag.post.tags">
+                        <a href="/tags/(( ::tag.id ))">
+                            <span title="See posts tagged with '(( ::tag.name ))'" class="badge badge-pill badge-dark">
+                                (( ::tag.name ))
+                            </span>
+                        </a>
+                </li>
+            </ul>
+            <br/>
+          </section>
+          <p class="text-grey">
+            <em>
+              <small>
+                (( ::post_tag.post.date_created ))
+              </small>
+            </em>
+          </p>
+          <p class="text-grey">
+            Likes: (( ::post_tag.post.likes ))<br/>
+            Comments: (( ::post_tag.post.comments_count ))
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center" ng-if="!init && !no_more_records">
+            <button ng-disabled="is_loading" type="button" class="btn btn-primary"
+              ng-click="load_posts_by_tag()">Load More Posts</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

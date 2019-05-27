@@ -86,9 +86,8 @@
                 </div>
 
                 <div class="row box-s1"
-                    ng-switch-when="true"
-                    ng-repeat="msg in messages">
-                    <div class="col-md-12" ng-switch="msg.sender.id === you.id">
+                    ng-switch-when="true"> 
+                    <div class="col-md-12" ng-repeat="msg in messages" ng-switch="msg.sender.id === you.id">
                         <div class="message-box-1" ng-switch-when="false">
                             <img class="user-icon" 
                                 src="(( ::msg.sender.icon_link || '/static/anon.png' ))" />
@@ -99,12 +98,12 @@
                         </div>
 
                         <div class="message-box-2" ng-switch-when="true">
+                            <img class="user-icon" 
+                                src="(( ::msg.sender.icon_link || '/static/anon.png' ))" />
                             <span class="message-details">
                                 (( ::msg.content ))<br />
                                 <em><small>(( ::msg.date_created ))</small></em>
                             </span>
-                            <img class="user-icon-1" 
-                                src="(( ::msg.sender.icon_link || '/static/anon.png' ))" />
                         </div>
                     </div>
                 </div>

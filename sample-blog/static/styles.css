@@ -62,7 +62,25 @@ nav {
     list-style: none;
     display: inline-block;
     margin: 0 5px 5px 0;
-    padding: 0
+    padding: 0;
+}
+
+.tags-ul-2 {
+  margin: 0;
+  padding: 0;
+}
+
+.tags-ul-2>li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  padding: 0;
+  font-size: 2rem;
+}
+
+.tags-ul-1>li:hover span,
+.tags-ul-2>li:hover span {
+  color: blue;
 }
 
 .box-s1 {
@@ -91,7 +109,7 @@ div.user-info-box-1>span.user-details-1 {
 
 div.message-box-1, div.message-box-2 {
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 div.message-box-1>img.user-icon {
@@ -115,7 +133,7 @@ div.message-box-2>img.user-icon {
 }
 div.message-box-2>span.message-details {
   float: right;
-  margin-left: 15px;
+  margin-right: 15px;
   padding: 10px;
   border: 1px solid black;
   background: #e3f2fd;

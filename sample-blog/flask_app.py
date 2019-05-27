@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = 'DF6Y#6G15$)F&*DFj/Y4DR'
 
 def uniqueValue():
-  value = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(50))
+  value = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(50))
   return value.lower()
 
 def login_required(f):
@@ -51,6 +51,18 @@ def welcome():
   logged_in = True if 'session_id' in user_session else False
   you_id = user_session['you_id'] if 'you_id' in user_session else False
   return render_template('welcome.html', logged_in = logged_in, you_id = you_id)
+
+@app.route('/tags', methods=['GET'])
+def tags_page():
+  logged_in = True if 'session_id' in user_session else False
+  you_id = user_session['you_id'] if 'you_id' in user_session else False
+  return render_template('tags-page.html', logged_in = logged_in, you_id = you_id)
+
+@app.route('/tags/<int:tag_id>', methods=['GET'])
+def posts_by_tag_page(tag_id):
+  logged_in = True if 'session_id' in user_session else False
+  you_id = user_session['you_id'] if 'you_id' in user_session else False
+  return render_template('posts-by-tag.html', logged_in = logged_in, you_id = you_id)
 
 @app.route('/login', methods=['GET'])
 def login_page():
@@ -134,6 +146,16 @@ def get_latest_posts_post_id(post_id):
   posts = flask_app_queries.get_latest_posts(post_id)
   return jsonify(posts = posts)
 
+@app.route('/get_latest_tags', methods=['GET'])
+def get_latest_tags():
+  tags = flask_app_queries.get_latest_tags(tag_id = None)
+  return jsonify(tags = tags)
+
+@app.route('/get_latest_tags/<int:tag_id>', methods=['GET'])
+def get_latest_tags_tag_id(tag_id):
+  tags = flask_app_queries.get_latest_tags(tag_id = tag_id)
+  return jsonify(tags = tags)
+
 @app.route('/users/<int:user_id>/get_latest_posts', methods=['GET'])
 def get_user_latest_posts(user_id):
   user_posts = flask_app_queries.get_user_latest_posts(user_id = user_id, post_id = None)
@@ -144,10 +166,27 @@ def get_user_latest_posts_post_id(user_id, post_id):
   user_posts = flask_app_queries.get_user_latest_posts(user_id = user_id, post_id = post_id)
   return jsonify(posts = user_posts)
 
+
+@app.route('/tags/<int:tag_id>/get_latest_posts/', methods=['GET'])
+def get_tag_latest_posts(tag_id):
+  tag_posts = flask_app_queries.get_tag_latest_posts(tag_id = tag_id, post_tag_id = None)
+  return jsonify(posts = tag_posts)
+
+@app.route('/tags/<int:tag_id>/get_latest_posts/<int:post_tag_id>', methods=['GET'])
+def get_tag_latest_posts_post_tag_id(tag_id, post_tag_id):
+  tag_posts = flask_app_queries.get_tag_latest_posts(tag_id = tag_id, post_tag_id = post_tag_id)
+  return jsonify(posts = tag_posts)
+
+
 @app.route('/get_post_by_id/<int:post_id>', methods=['GET'])
 def get_post_by_id(post_id):
   post = flask_app_queries.get_post_by_id(post_id)
   return jsonify(post = post)
+
+@app.route('/get_tag_by_id/<int:tag_id>', methods=['GET'])
+def get_tag_by_id(tag_id):
+  tag = flask_app_queries.get_tag_by_id(tag_id)
+  return jsonify(tag = tag)
 
 @app.route('/get_user_by_id/<int:user_id>', methods=['GET'])
 def get_user_by_id(user_id):

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Blog - Welcome</title>
+
+    {% include '_deps.html' %}
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/tags.js"></script>
+  </head>
+  <body ng-app="sampleApp" ng-controller="tagspageCtrl as ctrl">
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <h3>Tags</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                    <div>
+                        <ul class="tags-ul-2">
+                            <li ng-repeat="tag in tags">
+                                <a href="/tags/(( ::tag.id ))">
+                                    <span title="See posts tagged with '(( ::tag.name ))'" class="badge badge-pill badge-dark">
+                                        (( ::tag.name )) | Posts: (( ::tag.posts_by_tag_count ))
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+
+        <hr/>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center" ng-if="!init && !no_more_records">
+            <button ng-disabled="is_loading" type="button" class="btn btn-primary"
+              ng-click="load_tags()">Load More Tags</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
