@@ -1,6 +1,6 @@
 App.controller('postsbytagCtrl', ['$scope', '$vault', function($scope, $vault) {
 
-    let tag_id = null;
+    let tag_id = null, min_post_tag_id = null;
 
     $scope.tag_exists = null;
     $scope.init = true;
@@ -27,9 +27,12 @@ App.controller('postsbytagCtrl', ['$scope', '$vault', function($scope, $vault) {
     }
 
     $scope.load_posts_by_tag = function() {
-        const post_tags_ids = $scope.posts_by_tag.map(post_tag => post_tag.id);
-        const min_post_tag_id = post_tags_ids.length ? Math.min(...post_tags_ids) : null;
-        const path = $scope.min_post_id ? 
+        if (!min_post_tag_id) {
+            const post_tags_ids = $scope.posts_by_tag.map(post_tag => post_tag.id);
+            min_post_tag_id = post_tags_ids.length ? Math.min(...post_tags_ids) : null;
+        }
+        
+        const path = min_post_tag_id ? 
         `/tags/${tag_id}/get_latest_posts/${min_post_tag_id}` : 
         `/tags/${tag_id}/get_latest_posts`;
 
@@ -43,6 +46,7 @@ App.controller('postsbytagCtrl', ['$scope', '$vault', function($scope, $vault) {
                 if (json.posts.length < 5) {
                     $scope.no_more_records = true;
                 }
+                min_post_tag_id = Math.min(...(json.posts.map(post_tag => post_tag.id)));
                 $scope.is_loading = false;
                 $scope.$apply();
                 console.log(json, $scope);
